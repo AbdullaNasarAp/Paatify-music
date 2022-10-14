@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:lottie/lottie.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:paatify/controller/getsongs.dart';
@@ -23,6 +22,11 @@ class _AllSongsState extends State<AllSongs> {
   final _audioQuery = OnAudioQuery();
 
   // int index = 0;
+  @override
+  void initState() {
+    super.initState();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,22 +50,23 @@ class _AllSongsState extends State<AllSongs> {
               uriType: UriType.EXTERNAL,
               ignoreCase: true),
           builder: (context, item) {
-            if (item.data == null) {
+            if (item.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            }
-            if (item.data!.isEmpty) {
+            } else if (item.data!.isEmpty) {
               return const Center(
                 child: Text(
                   'No Songs Found',
                 ),
               );
+            } else {
+              AllSongs.plaYsong = item.data!;
             }
-            AllSongs.plaYsong = item.data!;
             if (!FavoriteDB.isIntialized) {
               FavoriteDB.intialize(item.data!);
             }
+
             return ListView.builder(
               itemBuilder: (context, index) => ListTile(
                 leading: QueryArtworkWidget(

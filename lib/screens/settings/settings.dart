@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lottie/lottie.dart';
+import 'package:paatify/controller/getsongs.dart';
 import 'package:paatify/database.dart/playlistdb.dart';
+import 'package:paatify/screens/miniplayer.dart';
 
 import 'package:paatify/screens/settings/aboutus.dart';
 import 'package:paatify/screens/settings/sharefile.dart';
@@ -70,23 +73,44 @@ class SettingsDrawer extends StatelessWidget {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                20.0,
+                              ),
+                            ),
                             title: const Text('Reset App'),
                             content: const Text(
                                 'Are you sure you want to reset the app?'),
                             actions: [
-                              TextButton(
-                                child: const Text('Cancel'),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
+                              Column(
+                                children: [
+                                  Center(
+                                    child: Lottie.asset(
+                                        "assets/lf30_editor_q2gqmhce.json",
+                                        width: 100,
+                                        height: 100),
+                                  )
+                                ],
                               ),
-                              TextButton(
-                                child: const Text('Reset'),
-                                onPressed: () {
-                                  PlayListDB.resetAPP(
-                                    context,
-                                  );
-                                },
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                    child: const Text('Cancel'),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: const Text('Reset'),
+                                    onPressed: () {
+                                      PlayListDB.resetAPP(
+                                        context,
+                                      );
+                                      GetSongs.player.stop();
+                                    },
+                                  ),
+                                ],
                               ),
                             ],
                           );

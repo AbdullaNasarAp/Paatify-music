@@ -35,6 +35,7 @@ class PlayListDB {
     final musicDb = Hive.box<int>('FavouriteDB');
     await musicDb.clear();
     await playListDb.clear();
+
     FavoriteDB.favoriteSongs.value.clear();
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
