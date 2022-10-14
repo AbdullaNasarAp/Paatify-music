@@ -3,8 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:paatify/controller/getsongs.dart';
 import 'package:paatify/database.dart/playlistdb.dart';
-import 'package:paatify/screens/miniplayer.dart';
-
 import 'package:paatify/screens/settings/aboutus.dart';
 import 'package:paatify/screens/settings/sharefile.dart';
 import 'package:paatify/screens/settings/termandpolicy.dart';
@@ -80,15 +78,17 @@ class SettingsDrawer extends StatelessWidget {
                             ),
                             title: const Text('Reset App'),
                             content: const Text(
-                                'Are you sure you want to reset the app?'),
+                              'Are you sure you want to reset the app?',
+                            ),
                             actions: [
                               Column(
                                 children: [
                                   Center(
                                     child: Lottie.asset(
-                                        "assets/lf30_editor_q2gqmhce.json",
-                                        width: 100,
-                                        height: 100),
+                                      "assets/lf30_editor_q2gqmhce.json",
+                                      width: 100,
+                                      height: 100,
+                                    ),
                                   )
                                 ],
                               ),
@@ -156,11 +156,12 @@ class SettingsTile extends StatelessWidget {
   IconData icon;
   final void Function() ontap;
 
-  SettingsTile(
-      {super.key,
-      required this.text1,
-      required this.icon,
-      required this.ontap});
+  SettingsTile({
+    super.key,
+    required this.text1,
+    required this.icon,
+    required this.ontap,
+  });
 
   @override
   Widget build(BuildContext context) {

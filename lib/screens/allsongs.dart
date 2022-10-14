@@ -22,11 +22,6 @@ class _AllSongsState extends State<AllSongs> {
   final _audioQuery = OnAudioQuery();
 
   // int index = 0;
-  @override
-  void initState() {
-    super.initState();
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {

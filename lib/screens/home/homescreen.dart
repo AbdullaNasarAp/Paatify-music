@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:paatify/constant/const.dart';
 import 'package:paatify/controller/getsongs.dart';
 import 'package:paatify/database.dart/favouritedb.dart';
+import 'package:paatify/screens/allsongs.dart';
 import 'package:paatify/screens/nowplaying.dart';
 import 'package:paatify/screens/favourite/favoritebut.dart';
 import 'package:paatify/screens/home/home.dart';
@@ -12,6 +13,7 @@ import 'package:paatify/screens/playlist/playlist.dart';
 import 'package:paatify/screens/settings/settings.dart';
 import 'package:paatify/screens/splash/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -24,10 +26,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _audioQuery = OnAudioQuery();
   @override
   void initState() {
-    super.initState();
     requestPermission();
+
+    super.initState();
   }
 
   void requestPermission() async {
@@ -38,9 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       setState(() {});
     }
+    Permission.storage.request;
   }
-
-  final _audioQuery = OnAudioQuery();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     uriType: UriType.EXTERNAL,
                     ignoreCase: true),
                 builder: (context, item) {
-                  if (item.connectionState == ConnectionState.waiting) {
+                  if (item.data == null) {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
@@ -96,91 +99,90 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         CarouselSlider.builder(
-                            itemBuilder: (BuildContext context, int itemIndex,
-                                    int pageViewIndex) =>
-                                GestureDetector(
-                                  onTap: () {
-                                    GetSongs.player.setAudioSource(
-                                        GetSongs.createSongList(item.data!),
-                                        initialIndex: itemIndex);
-                                    GetSongs.player.play();
-                                    setState(() {});
+                          itemBuilder: (
+                            BuildContext context,
+                            int itemIndex,
+                            int pageViewIndex,
+                          ) =>
+                              GestureDetector(
+                            onTap: () {
+                              GetSongs.player.setAudioSource(
+                                  GetSongs.createSongList(item.data!),
+                                  initialIndex: itemIndex);
+                              GetSongs.player.play();
+                              setState(() {});
 
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => NowPlaying(
-                                              playerSong: item.data!)),
-                                    );
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      QueryArtworkWidget(
-                                        keepOldArtwork: true,
-                                        quality: 100,
-                                        id: item.data![itemIndex].id,
-                                        type: ArtworkType.AUDIO,
-                                        nullArtworkWidget: CircleAvatar(
-                                          backgroundColor: Colors.white24,
-                                          radius: 30,
-                                          child: Lottie.asset(
-                                            'assets/listnull.json',
-                                            height: 200,
-                                            width: 200,
-                                          ),
-                                        ),
-                                        artworkBorder: const BorderRadius.all(
-                                          Radius.circular(
-                                            10,
-                                          ),
-                                        ),
-                                        artworkWidth:
-                                            MediaQuery.of(context).size.width *
-                                                0.3,
-                                        artworkHeight: 65,
-                                      ),
-                                      Text(
-                                        item.data![itemIndex].displayNameWOExt,
-                                        style: const TextStyle(
-                                          fontFamily: family,
-                                        ),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.clip,
-                                      ),
-                                      Text(
-                                        "${item.data![itemIndex].artist}",
-                                        style: const TextStyle(
-                                            fontSize: 13,
-                                            fontFamily: 'Segoe UI'),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.fade,
-                                      ),
-                                    ],
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => NowPlaying(
+                                    playerSong: item.data!,
                                   ),
                                 ),
-                            options: CarouselOptions(
-                              aspectRatio: 16 / 90,
-                              height: 155,
-                              viewportFraction: 0.4,
-                              autoPlay: true,
-                              autoPlayCurve: Curves.easeInQuint,
-                              enlargeCenterPage: true,
+                              );
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                QueryArtworkWidget(
+                                  keepOldArtwork: true,
+                                  quality: 100,
+                                  id: item.data![itemIndex].id,
+                                  type: ArtworkType.AUDIO,
+                                  nullArtworkWidget: CircleAvatar(
+                                    backgroundColor: Colors.white24,
+                                    radius: 30,
+                                    child: Lottie.asset(
+                                      'assets/listnull.json',
+                                      height: 200,
+                                      width: 200,
+                                    ),
+                                  ),
+                                  artworkBorder: const BorderRadius.all(
+                                    Radius.circular(
+                                      10,
+                                    ),
+                                  ),
+                                  artworkWidth:
+                                      MediaQuery.of(context).size.width * 0.3,
+                                  artworkHeight: 65,
+                                ),
+                                Text(
+                                  item.data![itemIndex].displayNameWOExt,
+                                  style: const TextStyle(
+                                    fontFamily: family,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.clip,
+                                ),
+                                Text(
+                                  "${item.data![itemIndex].artist}",
+                                  style: const TextStyle(
+                                      fontSize: 13, fontFamily: 'Segoe UI'),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.fade,
+                                ),
+                              ],
                             ),
-                            itemCount: 10),
+                          ),
+                          options: CarouselOptions(
+                            aspectRatio: 16 / 90,
+                            height: 155,
+                            viewportFraction: 0.4,
+                            autoPlay: true,
+                            autoPlayCurve: Curves.easeInQuint,
+                            enlargeCenterPage: true,
+                          ),
+                          itemCount: 10,
+                        ),
                       ],
                     );
                   }
                 },
               ),
             ),
-            // const CaroselCustom(),
             const SizedBox(
-              height: 10,
-            ),
-
-            const SizedBox(
-              height: 10,
+              height: 20,
             ),
             Expanded(
               child: FutureBuilder<List<SongModel>>(
@@ -200,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       'No Songs Found',
                     ));
                   }
-                  HomeScreen.plYsong = item.data!;
+                  AllSongs.plaYsong = item.data!;
                   if (!FavoriteDB.isIntialized) {
                     FavoriteDB.intialize(item.data!);
                   }
@@ -299,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     ),
-                    itemCount: 7,
+                    itemCount: item.data!.length,
                   );
                 },
               ),
