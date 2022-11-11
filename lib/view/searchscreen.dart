@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:paatify/controller/getsongs.dart';
-import 'package:paatify/screens/home/homescreen.dart';
-import 'package:paatify/screens/nowplaying.dart';
+import 'package:paatify/view/home/homescreen.dart';
+import 'package:paatify/view/nowplaying.dart';
 
 ValueNotifier<List<SongModel>> temp = ValueNotifier([]);
 

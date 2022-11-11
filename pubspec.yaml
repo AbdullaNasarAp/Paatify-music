@@ -42,6 +42,7 @@ dependencies:
   lottie: ^1.2.1
   on_audio_query: ^2.6.1
   permission_handler: ^10.0.0
+  provider: ^6.0.4
   rxdart: ^0.27.5
   share_plus: ^4.5.2
   url_launcher: ^6.1.5

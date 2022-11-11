@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:paatify/constant/const.dart';
-import 'package:paatify/screens/favourite/favorites.dart';
-import 'package:paatify/screens/playlist/playlist.dart';
+import 'package:paatify/view/constant/const.dart';
+import 'package:paatify/view/favourite/favorites.dart';
+import 'package:paatify/view/playlist/playlist.dart';
 
 class FavPlayList extends StatefulWidget {
   const FavPlayList({Key? key}) : super(key: key);

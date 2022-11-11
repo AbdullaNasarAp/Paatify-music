@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:paatify/controller/getsongs.dart';
-import 'package:paatify/screens/allsongs.dart';
-import 'package:paatify/screens/favplaylist.dart';
-import 'package:paatify/screens/miniplayer.dart';
-import 'package:paatify/screens/searchscreen.dart';
+import 'package:paatify/model/database.dart/favouriteDb.dart';
+import 'package:paatify/view/allsongs.dart';
+import 'package:paatify/view/favplaylist.dart';
+import 'package:paatify/view/miniplayer.dart';
+import 'package:paatify/view/searchscreen.dart';
 
-import '../database.dart/favouritedb.dart';
-import '../screens/home/homescreen.dart';
+import '../home/homescreen.dart';
 
 class BottomScreens extends StatefulWidget {
   const BottomScreens({Key? key}) : super(key: key);

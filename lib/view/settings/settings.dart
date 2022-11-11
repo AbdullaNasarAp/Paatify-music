@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:paatify/controller/getsongs.dart';
-import 'package:paatify/database.dart/playlistdb.dart';
-import 'package:paatify/screens/settings/aboutus.dart';
-import 'package:paatify/screens/settings/sharefile.dart';
-import 'package:paatify/screens/settings/termandpolicy.dart';
+import 'package:paatify/model/database.dart/playlistdb.dart';
+import 'package:paatify/view/settings/aboutus.dart';
+import 'package:paatify/view/settings/sharefile.dart';
+import 'package:paatify/view/settings/termandpolicy.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsDrawer extends StatelessWidget {

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:paatify/controller/getsongs.dart';
-import 'package:paatify/database.dart/favouritedb.dart';
-import 'package:paatify/screens/nowplaying.dart';
-import 'package:paatify/screens/favourite/favoritebut.dart';
-import 'package:paatify/screens/home/home.dart';
-import 'package:paatify/screens/playlist/playlist.dart';
+import 'package:paatify/model/database.dart/favouriteDb.dart';
+import 'package:paatify/view/nowplaying.dart';
+import 'package:paatify/view/favourite/favoritebut.dart';
+import 'package:paatify/view/home/home.dart';
+import 'package:paatify/view/playlist/playlist.dart';
 
 class AllSongs extends StatefulWidget {
   const AllSongs({

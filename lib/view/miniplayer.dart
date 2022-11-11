@@ -3,7 +3,7 @@ import 'package:lottie/lottie.dart';
 
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:paatify/controller/getsongs.dart';
-import 'package:paatify/screens/nowplaying.dart';
+import 'package:paatify/view/nowplaying.dart';
 
 class MiniPlayer extends StatefulWidget {
   const MiniPlayer({Key? key}) : super(key: key);

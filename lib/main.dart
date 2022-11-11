@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:just_audio_background/just_audio_background.dart';
+import 'package:paatify/controller/provider/providerstate.dart';
 import 'package:paatify/model/paatify_model.dart';
-import 'package:paatify/screens/splash/splashscreen.dart';
+import 'package:paatify/view/splash/splashscreen.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,10 +33,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
-      home: const SplashScreen(),
+    return ChangeNotifierProvider(
+      create: (context) => PaatifyProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.dark(),
+        home: const SplashScreen(),
+      ),
     );
   }
 }

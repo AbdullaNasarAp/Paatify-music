@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lottie/lottie.dart';
-import 'package:paatify/database.dart/playlistdb.dart';
+import 'package:paatify/model/database.dart/playlistdb.dart';
 
 import 'package:paatify/model/paatify_model.dart';
-import 'package:paatify/screens/playlist/playlistslist.dart';
-import 'package:paatify/screens/playlist/glass.dart';
+import 'package:paatify/view/playlist/playlistslist.dart';
+import 'package:paatify/view/playlist/glass.dart';
 
 class PlayListSc extends StatefulWidget {
   const PlayListSc({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:paatify/database.dart/playlistdb.dart';
+import 'package:paatify/model/database.dart/playlistdb.dart';
 import 'package:paatify/model/paatify_model.dart';
 
 class SongListPage extends StatefulWidget {

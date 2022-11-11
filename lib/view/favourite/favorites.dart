@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:paatify/controller/getsongs.dart';
-import 'package:paatify/database.dart/favouritedb.dart';
-import 'package:paatify/screens/nowplaying.dart';
+import 'package:paatify/model/database.dart/favouriteDb.dart';
+import 'package:paatify/view/nowplaying.dart';
 
 class Favorites extends StatefulWidget {
   const Favorites({Key? key}) : super(key: key);

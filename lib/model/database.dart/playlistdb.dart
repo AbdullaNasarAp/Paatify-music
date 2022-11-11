@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:paatify/database.dart/favouritedb.dart';
+import 'package:paatify/model/database.dart/favouriteDb.dart';
 import 'package:paatify/model/paatify_model.dart';
-import 'package:paatify/screens/splash/splashscreen.dart';
+import 'package:paatify/view/splash/splashscreen.dart';
 
 class PlayListDB {
   ValueNotifier<List<PaatifyMusic>> playlistnotifier = ValueNotifier([]);

@@ -2,9 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:paatify/controller/getsongs.dart';
-import 'package:paatify/screens/nowplaying.dart';
+import 'package:paatify/view/nowplaying.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import '../../constant/const.dart';
+import '../constant/const.dart';
 
 class CaroselCustom extends StatefulWidget {
   const CaroselCustom({

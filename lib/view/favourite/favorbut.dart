@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:paatify/database.dart/favouritedb.dart';
+import 'package:paatify/model/database.dart/favouriteDb.dart';
 
 class FavoritBut extends StatefulWidget {
   const FavoritBut({Key? key, required this.song}) : super(key: key);

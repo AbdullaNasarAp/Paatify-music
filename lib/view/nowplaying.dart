@@ -3,7 +3,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:paatify/controller/getsongs.dart';
 import 'package:lottie/lottie.dart';
-import 'package:paatify/screens/favourite/favorbut.dart';
+import 'package:paatify/view/favourite/favorbut.dart';
 
 class NowPlaying extends StatefulWidget {
   const NowPlaying({

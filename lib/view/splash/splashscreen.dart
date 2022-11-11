@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:paatify/constant/const.dart';
-import 'package:paatify/widgets/bottom_nav.dart';
+import 'package:paatify/view/constant/const.dart';
+import 'package:paatify/view/widgets/bottom_nav.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
