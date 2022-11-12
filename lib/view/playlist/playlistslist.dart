@@ -3,7 +3,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:lottie/lottie.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:paatify/controller/getsongs.dart';
-import 'package:paatify/controller/provider/playlistlistprovider.dart';
+import 'package:paatify/controller/provider/playlistprovider/playlistlistprovider.dart';
 import 'package:paatify/model/database.dart/playlistdb.dart';
 import 'package:paatify/model/paatify_model.dart';
 import 'package:paatify/view/nowplaying.dart';

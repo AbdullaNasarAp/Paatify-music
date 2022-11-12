@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:paatify/controller/provider/bottumnavigationprovider.dart';
+import 'package:paatify/controller/provider/favoritepro/favbutprovider.dart';
+import 'package:paatify/controller/provider/favoritepro/favoriteprovider.dart';
 import 'package:paatify/controller/provider/homeprovider.dart';
-import 'package:paatify/controller/provider/playlistlistprovider.dart';
+import 'package:paatify/controller/provider/playlistprovider/allsongslistprovider.dart';
+import 'package:paatify/controller/provider/playlistprovider/playlistlistprovider.dart';
 import 'package:paatify/controller/provider/searchprovider.dart';
 import 'package:paatify/model/paatify_model.dart';
+import 'package:paatify/view/favourite/favoritebut.dart';
 import 'package:paatify/view/splash/splashscreen.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +47,9 @@ class MyApp extends StatelessWidget {
             create: (context) => BottumNavigationBarProvider()),
         ChangeNotifierProvider(create: (context) => SearchProvider()),
         ChangeNotifierProvider(create: (context) => PlayListListProvider()),
+        ChangeNotifierProvider(create: (context) => AllSongsListProvider()),
+        ChangeNotifierProvider(create: (context) => FavoritesProvider()),
+        ChangeNotifierProvider(create: (context) => FavoriteButProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

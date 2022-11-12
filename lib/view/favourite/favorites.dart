@@ -3,19 +3,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:paatify/controller/getsongs.dart';
+import 'package:paatify/controller/provider/favoritepro/favoriteprovider.dart';
 import 'package:paatify/model/database.dart/favouriteDb.dart';
 import 'package:paatify/view/nowplaying.dart';
+import 'package:provider/provider.dart';
 
-class Favorites extends StatefulWidget {
+class Favorites extends StatelessWidget {
   const Favorites({Key? key}) : super(key: key);
 
   @override
-  State<Favorites> createState() => _FavoritesState();
-}
-
-class _FavoritesState extends State<Favorites> {
-  @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<FavoritesProvider>(context).notifyListeners();
     FocusManager.instance.primaryFocus?.unfocus();
     return ValueListenableBuilder(
       valueListenable: FavoriteDB.favoriteSongs,
@@ -72,7 +70,7 @@ class _FavoritesState extends State<Favorites> {
                               return ListTile(
                                 onTap: () {
                                   List<SongModel> favList = [...favorData];
-                                  setState(() {});
+                                  provider;
                                   GetSongs.player.stop();
                                   GetSongs.player.setAudioSource(
                                       GetSongs.createSongList(favList),
@@ -108,7 +106,7 @@ class _FavoritesState extends State<Favorites> {
                                   onPressed: () {
                                     FavoriteDB.favoriteSongs.notifyListeners();
                                     FavoriteDB.delete(favorData[index].id);
-                                    setState(() {});
+                                    provider;
                                     const snackbar = SnackBar(
                                       backgroundColor: Colors.black,
                                       content: Text(
