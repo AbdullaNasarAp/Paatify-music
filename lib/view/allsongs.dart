@@ -8,17 +8,12 @@ import 'package:paatify/view/favourite/favoritebut.dart';
 import 'package:paatify/view/home/home.dart';
 import 'package:paatify/view/playlist/playlist.dart';
 
-class AllSongs extends StatefulWidget {
-  const AllSongs({
+class AllSongs extends StatelessWidget {
+  AllSongs({
     Key? key,
   }) : super(key: key);
   static List<SongModel> plaYsong = [];
 
-  @override
-  State<AllSongs> createState() => _AllSongsState();
-}
-
-class _AllSongsState extends State<AllSongs> {
   final _audioQuery = OnAudioQuery();
 
   // int index = 0;

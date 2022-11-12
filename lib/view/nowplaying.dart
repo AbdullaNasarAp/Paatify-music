@@ -136,7 +136,7 @@ class _NowPlayingState extends State<NowPlaying> {
                     onChanged: (value) {
                       setState(() {
                         changeToSeconds(value.toInt());
-                        value = value;
+                        // value = value;
                       });
                     },
                     thumbColor: Colors.blue,
@@ -182,9 +182,9 @@ class _NowPlayingState extends State<NowPlaying> {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: const CircleBorder(),
-                      primary: Colors.black,
-                      onPrimary: Colors.blue),
+                      foregroundColor: Colors.blue,
+                      backgroundColor: Colors.black,
+                      shape: const CircleBorder()),
                   onPressed: () async {
                     if (GetSongs.player.playing) {
                       await GetSongs.player.pause();

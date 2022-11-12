@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:paatify/controller/provider/homeprovider.dart';
 import 'package:paatify/model/database.dart/favouriteDb.dart';
 import 'package:paatify/view/constant/const.dart';
 import 'package:paatify/controller/getsongs.dart';
@@ -13,40 +13,21 @@ import 'package:paatify/view/playlist/playlist.dart';
 import 'package:paatify/view/settings/settings.dart';
 import 'package:paatify/view/splash/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({
+class HomeScreen extends StatelessWidget {
+  HomeScreen({
     Key? key,
   }) : super(key: key);
   static List<SongModel> plYsong = [];
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   final _audioQuery = OnAudioQuery();
-  @override
-  void initState() {
-    requestPermission();
-
-    super.initState();
-  }
-
-  void requestPermission() async {
-    if (!kIsWeb) {
-      bool permissionStatus = await _audioQuery.permissionsStatus();
-      if (!permissionStatus) {
-        await _audioQuery.permissionsRequest();
-      }
-      setState(() {});
-    }
-    Permission.storage.request;
-  }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<HomeProvider>(context, listen: false).requestPermission();
+    });
     return Scaffold(
       backgroundColor: Colors.black87,
       body: SafeArea(
@@ -110,8 +91,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   GetSongs.createSongList(item.data!),
                                   initialIndex: itemIndex);
                               GetSongs.player.play();
-                              setState(() {});
-
+                              Provider.of<HomeProvider>(context)
+                                  .notifyListeners();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -173,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             autoPlayCurve: Curves.easeInQuint,
                             enlargeCenterPage: true,
                           ),
-                          itemCount: 10,
+                          itemCount: item.data!.length,
                         ),
                       ],
                     );
@@ -252,49 +233,36 @@ class _HomeScreenState extends State<HomeScreen> {
                           return [
                             PopupMenuItem(
                               value: 1,
-                              child: Row(
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      FavoriteBut(
-                                        song: HomeScreen.plYsong[index],
-                                      );
-                                    },
-                                    child: Row(
-                                      children: [
-                                        FavoriteBut(
-                                          song: HomeScreen.plYsong[index],
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
+                              child: TextButton(
+                                onPressed: () {
+                                  FavoriteBut(
+                                    song: AllSongs.plaYsong[index],
+                                  );
+                                },
+                                child: FavoriteBut(
+                                  song: AllSongs.plaYsong[index],
+                                ),
                               ),
                             ),
                             PopupMenuItem(
                               value: 1,
-                              child: Row(
-                                children: [
-                                  TextButton.icon(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const PlayListSc(),
-                                        ),
-                                      );
-                                    },
-                                    icon: const Icon(
-                                      Icons.playlist_add,
-                                      color: Colors.white,
+                              child: TextButton.icon(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const PlayListSc(),
                                     ),
-                                    label: const Text(
-                                      "Add To PLayList",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                ],
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.playlist_add,
+                                  color: Colors.white,
+                                ),
+                                label: const Text(
+                                  "Add To PLayList",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           ];

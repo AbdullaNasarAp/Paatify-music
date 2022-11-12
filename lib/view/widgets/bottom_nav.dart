@@ -1,102 +1,93 @@
 import 'package:flutter/material.dart';
-
-import 'package:on_audio_query/on_audio_query.dart';
 import 'package:paatify/controller/getsongs.dart';
-import 'package:paatify/model/database.dart/favouriteDb.dart';
+
+import 'package:paatify/controller/provider/bottumnavigationprovider.dart';
 import 'package:paatify/view/allsongs.dart';
 import 'package:paatify/view/favplaylist.dart';
+import 'package:paatify/view/home/homescreen.dart';
 import 'package:paatify/view/miniplayer.dart';
 import 'package:paatify/view/searchscreen.dart';
 
-import '../home/homescreen.dart';
+import 'package:provider/provider.dart';
 
-class BottomScreens extends StatefulWidget {
-  const BottomScreens({Key? key}) : super(key: key);
+class BottomScreens extends StatelessWidget {
+  BottomScreens({Key? key}) : super(key: key);
 
-  @override
-  State<BottomScreens> createState() => _BottomScreensState();
-}
-
-class _BottomScreensState extends State<BottomScreens> {
-  int Index = 0;
+  int currentIndex = 0;
   final screens = [
-    const HomeScreen(),
-    const AllSongs(),
-    const SearchBar(),
+    HomeScreen(),
+    AllSongs(),
+    const SearchScreen(),
     const FavPlayList(),
   ];
   @override
   Widget build(BuildContext context) {
-    FocusManager.instance.primaryFocus?.unfocus();
-    return Scaffold(
-      body: IndexedStack(index: Index, children: screens),
-      bottomNavigationBar: ValueListenableBuilder(
-        valueListenable: FavoriteDB.favoriteSongs,
-        builder: (BuildContext context, List<SongModel> music, Widget? child) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (GetSongs.player.currentIndex != null)
-                Column(
-                  children: const [
-                    MiniPlayer(),
-                  ],
-                )
-              else
-                const SizedBox(),
-              NavigationBar(
-                elevation: 0,
-                height: 75,
-                labelBehavior:
-                    NavigationDestinationLabelBehavior.onlyShowSelected,
-                selectedIndex: Index,
-                animationDuration: const Duration(seconds: 2),
-                onDestinationSelected: (index) =>
-                    setState(() => this.Index = index),
-                destinations: const [
-                  NavigationDestination(
-                    icon: Icon(
-                      Icons.home_outlined,
+    final provider = Provider.of<BottumNavigationBarProvider>(context);
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      decoration: const BoxDecoration(color: Colors.black),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: IndexedStack(index: currentIndex, children: screens),
+        bottomNavigationBar: Consumer<BottumNavigationBarProvider>(
+          builder: (context, value, child) {
+            return SingleChildScrollView(
+                child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (GetSongs.player.currentIndex != null)
+                  Column(
+                    children: const [
+                      MiniPlayer(),
+                      SizedBox(height: 10),
+                    ],
+                  )
+                else
+                  const SizedBox(),
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30)),
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 10),
+                    child: BottomNavigationBar(
+                      elevation: 0,
+                      backgroundColor: Colors.white24,
+                      selectedItemColor: Colors.white,
+                      selectedFontSize: 15,
+                      unselectedItemColor: Colors.white,
+                      selectedIconTheme:
+                          const IconThemeData(color: Colors.white),
+                      showUnselectedLabels: false,
+                      type: BottomNavigationBarType.fixed,
+                      currentIndex: currentIndex,
+                      onTap: (index) {
+                        currentIndex = index;
+                        provider.currentIndex = index;
+                      },
+                      items: const [
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.music_note), label: 'Home'),
+                        BottomNavigationBarItem(
+                            icon: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 10),
+                              child: Icon(Icons.list),
+                            ),
+                            label: 'All Songs'),
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.search), label: 'Search'),
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.library_music), label: 'Library'),
+                      ],
                     ),
-                    selectedIcon: Icon(
-                      Icons.home,
-                      color: Color.fromARGB(255, 221, 221, 221),
-                    ),
-                    label: 'Home',
                   ),
-                  NavigationDestination(
-                    icon: Icon(
-                      Icons.album_outlined,
-                    ),
-                    selectedIcon: Icon(
-                      Icons.album,
-                      color: Color.fromARGB(255, 221, 221, 221),
-                    ),
-                    label: 'All Songs',
-                  ),
-                  NavigationDestination(
-                    icon: Icon(
-                      Icons.search_outlined,
-                    ),
-                    selectedIcon: Icon(
-                      Icons.search,
-                      color: Color.fromARGB(255, 221, 221, 221),
-                    ),
-                    label: 'Search',
-                  ),
-                  NavigationDestination(
-                    icon: Icon(Icons.library_music_outlined),
-                    selectedIcon: Icon(
-                      Icons.library_music,
-                      color: Color.fromARGB(255, 221, 221, 221),
-                    ),
-                    label: 'Settings',
-                  ),
-                ],
-              ),
-            ],
-          );
-        },
+                ),
+              ],
+            ));
+          },
+        ),
       ),
     );
   }

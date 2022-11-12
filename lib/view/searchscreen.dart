@@ -1,123 +1,176 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+
+import 'package:lottie/lottie.dart';
 
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:paatify/controller/getsongs.dart';
-import 'package:paatify/view/home/homescreen.dart';
 import 'package:paatify/view/nowplaying.dart';
 
-ValueNotifier<List<SongModel>> temp = ValueNotifier([]);
+class SearchScreen extends StatefulWidget {
+  const SearchScreen({
+    Key? key,
+  }) : super(key: key);
 
-class SearchBar extends StatefulWidget {
-  const SearchBar({Key? key}) : super(key: key);
   @override
-  State<SearchBar> createState() => _SearchBarState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _SearchBarState extends State<SearchBar> {
+late List<SongModel> allSong;
+
+List<SongModel> song = [];
+
+final audioQuery = OnAudioQuery();
+
+class _SearchScreenState extends State<SearchScreen> {
+  @override
+  void initState() {
+    super.initState();
+    allSongLoad();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
+    return Scaffold(
+      backgroundColor: Colors.black87,
+      appBar: AppBar(
         backgroundColor: Colors.black87,
-        extendBody: true,
-        appBar: AppBar(
-          toolbarHeight: 90,
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          title: Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: TextField(
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  filled: true,
-                  fillColor: Colors.transparent,
-                  hintText: 'Search',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  prefixIcon: Icon(Icons.search)),
-              onChanged: (String? value) {
-                if (value != null && value.isNotEmpty) {
-                  temp.value.clear();
-                  for (SongModel item in HomeScreen.plYsong) {
-                    if (item.title
-                        .toLowerCase()
-                        .contains(value.toLowerCase())) {
-                      temp.value.add(item);
-                    }
-                  }
-                }
-                temp.notifyListeners();
-              },
+        toolbarHeight: 70,
+        title: TextFormField(
+          onChanged: (value) => search(
+            value,
+          ),
+          style: const TextStyle(
+            fontWeight: FontWeight.normal,
+          ),
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.fromLTRB(
+              30.0,
+              10.0,
+              20.0,
+              10.0,
+            ),
+            prefixIcon: const Icon(
+              Icons.search,
+            ),
+            labelText: 'Search Now...',
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(
+                30,
+              ),
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                ValueListenableBuilder(
-                    valueListenable: temp,
-                    builder: (BuildContext context, List<SongModel> songData,
-                        Widget? child) {
-                      return ListView.separated(
-                          shrinkWrap: true,
-                          physics: const ClampingScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (context, index) {
-                            final data = songData[index];
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: ListTile(
-                                leading: QueryArtworkWidget(
-                                    nullArtworkWidget: const Icon(
-                                      Icons.music_note_outlined,
-                                      color: Colors.white,
-                                      size: 35,
-                                    ),
-                                    artworkFit: BoxFit.cover,
-                                    id: data.id,
-                                    type: ArtworkType.AUDIO),
-                                title: Text(
-                                  data.title,
-                                  style: const TextStyle(color: Colors.white),
+      ),
+      body: SingleChildScrollView(
+        physics: const ScrollPhysics(),
+        child: SafeArea(
+          child: Column(
+            children: [
+              song.isNotEmpty
+                  ? ListView.builder(
+                      physics: const ScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: song.length,
+                      itemBuilder: ((context, index) {
+                        return ListTile(
+                          title: Text(
+                            song[index].displayNameWOExt,
+                            maxLines: 1,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            '${song[index].artist}' == "<unknown>"
+                                ? "Unknown Artist"
+                                : '${song[index].artist}',
+                            maxLines: 1,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          leading: QueryArtworkWidget(
+                            artworkBorder: BorderRadius.circular(
+                              10,
+                            ),
+                            id: song[index].id,
+                            type: ArtworkType.AUDIO,
+                            nullArtworkWidget: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  10,
                                 ),
-                                onTap: () {
-                                  final searchIndex = creatSearchIndex(data);
-                                  FocusScope.of(context).unfocus();
-                                  GetSongs.player.setAudioSource(
-                                      GetSongs.createSongList(
-                                          HomeScreen.plYsong),
-                                      initialIndex: searchIndex);
-                                  GetSongs.player.play();
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (ctx) => NowPlaying(
-                                          playerSong: HomeScreen.plYsong)));
-                                },
+                                color: Colors.amber,
+                              ),
+                              child: const Icon(Icons.music_note),
+                            ),
+                          ),
+                          onTap: () {
+                            GetSongs.player.setAudioSource(
+                              GetSongs.createSongList(
+                                song,
+                              ),
+                              initialIndex: index,
+                            );
+                            GetSongs.player.play();
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: ((context) {
+                                  return NowPlaying(
+                                    playerSong: song,
+                                  );
+                                }),
                               ),
                             );
                           },
-                          separatorBuilder: (ctx, index) {
-                            return const Divider();
-                          },
-                          itemCount: temp.value.length);
-                    }),
-              ],
-            ),
+                        );
+                      }),
+                    )
+                  : Center(
+                      heightFactor: 1.5,
+                      child: LottieBuilder.asset(
+                        height: 300,
+                        'assets/lottie/73061-search-not-found.json',
+                      ),
+                    ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  int? creatSearchIndex(SongModel data) {
-    for (int i = 0; i < HomeScreen.plYsong.length; i++) {
-      if (data.id == HomeScreen.plYsong[i].id) {
-        return i;
-      }
+  void allSongLoad() async {
+    allSong = await audioQuery.querySongs(
+      sortType: null,
+      orderType: OrderType.ASC_OR_SMALLER,
+      uriType: UriType.EXTERNAL,
+      ignoreCase: true,
+    );
+    setState(() {
+      song = allSong;
+    });
+  }
+
+  void search(String keybord) {
+    List<SongModel> results = [];
+    if (keybord.isEmpty) {
+      results = allSong;
+    } else {
+      results = allSong
+          .where(
+            (element) => element.displayNameWOExt.toLowerCase().contains(
+                  keybord.toLowerCase(),
+                ),
+          )
+          .toList();
     }
-    return null;
+    setState(() {
+      song = results;
+    });
   }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:just_audio_background/just_audio_background.dart';
-import 'package:paatify/controller/provider/providerstate.dart';
+import 'package:paatify/controller/provider/bottumnavigationprovider.dart';
+import 'package:paatify/controller/provider/homeprovider.dart';
+import 'package:paatify/controller/provider/playlistlistprovider.dart';
+import 'package:paatify/controller/provider/searchprovider.dart';
 import 'package:paatify/model/paatify_model.dart';
 import 'package:paatify/view/splash/splashscreen.dart';
 import 'package:flutter/services.dart';
@@ -33,8 +36,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => PaatifyProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => HomeProvider()),
+        ChangeNotifierProvider(
+            create: (context) => BottumNavigationBarProvider()),
+        ChangeNotifierProvider(create: (context) => SearchProvider()),
+        ChangeNotifierProvider(create: (context) => PlayListListProvider()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
