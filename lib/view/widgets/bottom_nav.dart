@@ -17,7 +17,7 @@ class BottomScreens extends StatelessWidget {
   final screens = [
     HomeScreen(),
     AllSongs(),
-    const SearchScreen(),
+    SearchScreen(),
     const FavPlayList(),
   ];
   @override

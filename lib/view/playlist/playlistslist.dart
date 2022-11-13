@@ -48,136 +48,134 @@ class PlaylistData extends StatelessWidget {
             ),
             centerTitle: true,
           ),
-          body: Column(
-            children: [
-              ValueListenableBuilder(
-                valueListenable: Hive.box<PaatifyMusic>(
-                  'playlistDB',
-                ).listenable(),
-                builder: (
-                  BuildContext context,
-                  Box<PaatifyMusic> value,
-                  Widget? child,
-                ) {
-                  playlistsong = listPlaylist(
-                    value.values.toList()[folderindex].songId,
-                  );
+          body: ListView(children: [
+            ValueListenableBuilder(
+              valueListenable: Hive.box<PaatifyMusic>(
+                'playlistDB',
+              ).listenable(),
+              builder: (
+                BuildContext context,
+                Box<PaatifyMusic> value,
+                Widget? child,
+              ) {
+                playlistsong = listPlaylist(
+                  value.values.toList()[folderindex].songId,
+                );
 
-                  return playlistsong.isEmpty
-                      ? Column(
-                          children: [
-                            Lottie.asset(
-                              "assets/repRmRA5JM.json",
-                              height: 265,
-                              width: 365,
+                return playlistsong.isEmpty
+                    ? Column(
+                        children: [
+                          Lottie.asset(
+                            "assets/repRmRA5JM.json",
+                            height: 265,
+                            width: 365,
+                          ),
+                          const Text(
+                            'No songs in this playlist',
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 20,
                             ),
-                            const Text(
-                              'No songs in this playlist',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 20,
+                          ),
+                        ],
+                      )
+                    : ListView.separated(
+                        reverse: true,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (ctx, index) {
+                          return ListTile(
+                            onTap: () {
+                              List<SongModel> newlist = [
+                                ...playlistsong,
+                              ];
+
+                              GetSongs.player.stop();
+                              GetSongs.player.setAudioSource(
+                                  GetSongs.createSongList(
+                                    newlist,
+                                  ),
+                                  initialIndex: index);
+                              GetSongs.player.play();
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (ctx) => NowPlaying(
+                                    playerSong: playlistsong,
+                                  ),
+                                ),
+                              );
+                            },
+                            leading: QueryArtworkWidget(
+                              id: playlistsong[index].id,
+                              type: ArtworkType.AUDIO,
+                              artworkBorder: BorderRadius.circular(
+                                0,
+                              ),
+                              nullArtworkWidget: CircleAvatar(
+                                radius:
+                                    MediaQuery.of(context).size.width * 0.075,
+                                backgroundColor: const Color.fromARGB(
+                                  255,
+                                  43,
+                                  42,
+                                  42,
+                                ),
+                                child: const Icon(
+                                  Icons.music_note,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              errorBuilder: (
+                                context,
+                                excepion,
+                                gdb,
+                              ) {
+                                Provider.of<PlayListListProvider>(context)
+                                    .notifyListeners();
+                                return Image.asset('');
+                              },
+                            ),
+                            title: Text(
+                              playlistsong[index].title,
+                              maxLines: 1,
+                              overflow: TextOverflow.fade,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
                               ),
                             ),
-                          ],
-                        )
-                      : ListView.separated(
-                          reverse: true,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (ctx, index) {
-                            return ListTile(
-                              onTap: () {
-                                List<SongModel> newlist = [
-                                  ...playlistsong,
-                                ];
-
-                                GetSongs.player.stop();
-                                GetSongs.player.setAudioSource(
-                                    GetSongs.createSongList(
-                                      newlist,
-                                    ),
-                                    initialIndex: index);
-                                GetSongs.player.play();
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (ctx) => NowPlaying(
-                                      playerSong: playlistsong,
-                                    ),
-                                  ),
+                            subtitle: Text(
+                              playlistsong[index].artist!,
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
+                              maxLines: 1,
+                            ),
+                            trailing: IconButton(
+                              onPressed: () {
+                                playlist.deleteData(
+                                  playlistsong[index].id,
                                 );
                               },
-                              leading: QueryArtworkWidget(
-                                id: playlistsong[index].id,
-                                type: ArtworkType.AUDIO,
-                                artworkBorder: BorderRadius.circular(
-                                  0,
-                                ),
-                                nullArtworkWidget: CircleAvatar(
-                                  radius:
-                                      MediaQuery.of(context).size.width * 0.075,
-                                  backgroundColor: const Color.fromARGB(
-                                    255,
-                                    43,
-                                    42,
-                                    42,
-                                  ),
-                                  child: const Icon(
-                                    Icons.music_note,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                errorBuilder: (
-                                  context,
-                                  excepion,
-                                  gdb,
-                                ) {
-                                  Provider.of<PlayListListProvider>(context)
-                                      .notifyListeners();
-                                  return Image.asset('');
-                                },
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.white,
                               ),
-                              title: Text(
-                                playlistsong[index].title,
-                                maxLines: 1,
-                                overflow: TextOverflow.fade,
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              subtitle: Text(
-                                playlistsong[index].artist!,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                ),
-                                maxLines: 1,
-                              ),
-                              trailing: IconButton(
-                                onPressed: () {
-                                  playlist.deleteData(
-                                    playlistsong[index].id,
-                                  );
-                                },
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            );
-                          },
-                          separatorBuilder: (
-                            ctx,
-                            index,
-                          ) {
-                            return const Divider();
-                          },
-                          itemCount: playlistsong.length,
-                        );
-                },
-              ),
-            ],
-          ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (
+                          ctx,
+                          index,
+                        ) {
+                          return const Divider();
+                        },
+                        itemCount: playlistsong.length,
+                      );
+              },
+            ),
+          ]),
           floatingActionButton: FloatingActionButton.extended(
             onPressed: () {
               Navigator.of(context).push(

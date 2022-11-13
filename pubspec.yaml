@@ -36,6 +36,7 @@ dependencies:
     sdk: flutter
   font_awesome_flutter: ^10.2.1
   glassmorphism: ^3.0.0
+  google_fonts: ^3.0.1
   hive_flutter: ^1.1.0
   just_audio: ^0.9.28
   just_audio_background: ^0.0.1-beta.7

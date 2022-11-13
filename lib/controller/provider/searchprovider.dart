@@ -1,18 +1,39 @@
 import 'package:flutter/widgets.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:paatify/view/home/homescreen.dart';
 
 class SearchProvider extends ChangeNotifier {
-  List<SongModel> temp = [];
-  searchFilter(value) {
-    if (value != null && value.isNotEmpty) {
-      temp.clear();
-      for (SongModel item in HomeScreen.plYsong) {
-        if (item.title.toLowerCase().contains(value.toLowerCase())) {
-          temp.add(item);
-        }
-      }
+  late List<SongModel> allSong;
+
+  List<SongModel> song = [];
+
+  final audioQuery = OnAudioQuery();
+  void allSongLoad() async {
+    allSong = await audioQuery.querySongs(
+      sortType: null,
+      orderType: OrderType.ASC_OR_SMALLER,
+      uriType: UriType.EXTERNAL,
+      ignoreCase: true,
+    );
+    notifyListeners();
+
+    song = allSong;
+  }
+
+  void search(String keybord) {
+    List<SongModel> results = [];
+    if (keybord.isEmpty) {
+      results = allSong;
+    } else {
+      results = allSong
+          .where(
+            (element) => element.displayNameWOExt.toLowerCase().contains(
+                  keybord.toLowerCase(),
+                ),
+          )
+          .toList();
     }
+
+    song = results;
     notifyListeners();
   }
 }

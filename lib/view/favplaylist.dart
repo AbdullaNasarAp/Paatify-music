@@ -4,14 +4,9 @@ import 'package:paatify/view/constant/const.dart';
 import 'package:paatify/view/favourite/favorites.dart';
 import 'package:paatify/view/playlist/playlist.dart';
 
-class FavPlayList extends StatefulWidget {
+class FavPlayList extends StatelessWidget {
   const FavPlayList({Key? key}) : super(key: key);
 
-  @override
-  State<FavPlayList> createState() => _FavPlayListState();
-}
-
-class _FavPlayListState extends State<FavPlayList> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
@@ -80,7 +75,7 @@ class Grid extends StatelessWidget {
 
 List gridIndex = [
   const Favorites(),
-  const PlayListSc(),
+  PlayListSc(),
 ];
 final List gridImage = [
   imag1,

@@ -7,17 +7,12 @@ import 'package:paatify/model/paatify_model.dart';
 import 'package:paatify/view/playlist/playlistslist.dart';
 import 'package:paatify/view/playlist/glass.dart';
 
-class PlayListSc extends StatefulWidget {
-  const PlayListSc({Key? key}) : super(key: key);
+class PlayListSc extends StatelessWidget {
+  PlayListSc({Key? key}) : super(key: key);
 
-  @override
-  State<PlayListSc> createState() => _PlayListScState();
-}
+  final nameController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-final nameController = TextEditingController();
-final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-class _PlayListScState extends State<PlayListSc> {
   @override
   Widget build(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
