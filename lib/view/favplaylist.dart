@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:paatify/view/constant/const.dart';
+import 'package:paatify/controller/constant/const.dart';
 import 'package:paatify/view/favourite/favorites.dart';
 import 'package:paatify/view/playlist/playlist.dart';
 

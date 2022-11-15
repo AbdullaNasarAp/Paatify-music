@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paatify/view/constant/const.dart';
+import 'package:paatify/controller/constant/const.dart';
 
 class AboutUs extends StatelessWidget {
   const AboutUs({Key? key}) : super(key: key);

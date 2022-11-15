@@ -5,6 +5,7 @@ import 'package:paatify/controller/provider/bottumnavigationprovider.dart';
 import 'package:paatify/controller/provider/favoritepro/favbutprovider.dart';
 import 'package:paatify/controller/provider/favoritepro/favoriteprovider.dart';
 import 'package:paatify/controller/provider/homeprovider.dart';
+import 'package:paatify/controller/provider/miniplayerprovider.dart';
 import 'package:paatify/controller/provider/playlistprovider/allsongslistprovider.dart';
 import 'package:paatify/controller/provider/playlistprovider/playlistlistprovider.dart';
 import 'package:paatify/controller/provider/searchprovider.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => AllSongsListProvider()),
         ChangeNotifierProvider(create: (context) => FavoritesProvider()),
         ChangeNotifierProvider(create: (context) => FavoriteButProvider()),
+        ChangeNotifierProvider(create: (context) => MiniPlayerProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

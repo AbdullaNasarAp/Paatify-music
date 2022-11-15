@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:paatify/controller/provider/homeprovider.dart';
 import 'package:paatify/model/database.dart/favouriteDb.dart';
-import 'package:paatify/view/constant/const.dart';
+import 'package:paatify/controller/constant/const.dart';
 import 'package:paatify/controller/getsongs.dart';
 import 'package:paatify/view/allsongs.dart';
 import 'package:paatify/view/nowplaying.dart';
