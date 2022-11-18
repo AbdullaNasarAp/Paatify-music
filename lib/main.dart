@@ -10,7 +10,6 @@ import 'package:paatify/controller/provider/playlistprovider/allsongslistprovide
 import 'package:paatify/controller/provider/playlistprovider/playlistlistprovider.dart';
 import 'package:paatify/controller/provider/searchprovider.dart';
 import 'package:paatify/model/paatify_model.dart';
-import 'package:paatify/view/favourite/favoritebut.dart';
 import 'package:paatify/view/splash/splashscreen.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
