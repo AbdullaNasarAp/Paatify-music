@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:paatify/controller/constant/const.dart';
 import 'package:paatify/view/favourite/favorites.dart';
@@ -9,9 +10,9 @@ class FavPlayList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.black87,
-      body: SafeArea(
+    return Scaffold(
+      backgroundColor: HexColor("151515"),
+      body: const SafeArea(
           child: Padding(
         padding: EdgeInsets.all(15.0),
         child: Center(child: Grid()),
@@ -30,10 +31,10 @@ class Grid extends StatelessWidget {
     return GridView.builder(
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          childAspectRatio: 2.10 / 2.10,
-          maxCrossAxisExtent: 200,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20),
+          maxCrossAxisExtent: 300,
+          crossAxisSpacing: 10.0,
+          mainAxisSpacing: 10.0,
+          childAspectRatio: 154 / 124),
       itemBuilder: (BuildContext context, index) {
         return GridTile(
           child: Container(
@@ -45,8 +46,6 @@ class Grid extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               color: Colors.white24,
             ),
-            height: 100,
-            width: 100,
             child: TextButton(
               onPressed: () {
                 Navigator.push(
@@ -56,14 +55,21 @@ class Grid extends StatelessWidget {
                     ));
               },
               child: Center(
-                  child: Text(
-                gridText[index],
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 27,
-                    fontFamily: 'Segoe UI',
-                    fontWeight: FontWeight.bold),
-              )),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(gridIcons[index]),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    text(
+                        text: gridText[index],
+                        color: Colors.white,
+                        fontSize: 13,
+                        ftWeight: FontWeight.bold),
+                  ],
+                ),
+              ),
             ),
           ),
         );
@@ -80,6 +86,10 @@ List gridIndex = [
 final List gridImage = [
   imag1,
   imag2,
+];
+final List<String> gridIcons = [
+  "assets/image/favicon.svg",
+  "assets/image/playlist.svg",
 ];
 final List gridText = [
   "Favorites",

@@ -263,7 +263,7 @@ class PlayListSc extends StatelessWidget {
                                   width: 100.0,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      primary: const Color.fromARGB(
+                                      backgroundColor: const Color.fromARGB(
                                         255,
                                         225,
                                         236,

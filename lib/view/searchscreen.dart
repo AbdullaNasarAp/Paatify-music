@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:paatify/controller/getsongs.dart';
@@ -60,7 +60,7 @@ class SearchScreen extends StatelessWidget {
                               title: Text(
                                 value.song[index].displayNameWOExt,
                                 maxLines: 1,
-                                style: GoogleFonts.montserrat(
+                                style: TextStyle(
                                   fontSize: 15,
                                   color:
                                       const Color.fromARGB(255, 255, 255, 255),
@@ -70,7 +70,7 @@ class SearchScreen extends StatelessWidget {
                               subtitle: Text(
                                 " ${value.song[index].artist}",
                                 maxLines: 1,
-                                style: GoogleFonts.montserrat(
+                                style: TextStyle(
                                   fontSize: 13,
                                   color:
                                       const Color.fromARGB(255, 255, 255, 255),
@@ -120,7 +120,7 @@ class SearchScreen extends StatelessWidget {
                                 height: 265,
                                 width: 365,
                               ),
-                              Text(
+                              const Text(
                                 "No Songs Found",
                                 style: TextStyle(color: Colors.white),
                               )

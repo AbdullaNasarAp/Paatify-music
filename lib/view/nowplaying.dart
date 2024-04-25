@@ -182,9 +182,9 @@ class _NowPlayingState extends State<NowPlaying> {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.blue,
                       shape: const CircleBorder(),
-                      primary: Colors.black,
-                      onPrimary: Colors.blue),
+                      backgroundColor: Colors.black),
                   onPressed: () async {
                     if (GetSongs.player.playing) {
                       await GetSongs.player.pause();

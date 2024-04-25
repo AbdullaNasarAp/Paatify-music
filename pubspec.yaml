@@ -34,6 +34,7 @@ dependencies:
   carousel_slider: ^4.1.1
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.9
   font_awesome_flutter: ^10.2.1
   glassmorphism: ^3.0.0
   google_fonts: ^3.0.1
@@ -48,6 +49,7 @@ dependencies:
   provider: ^6.0.4
   rxdart: ^0.27.5
   share_plus: ^4.5.2
+  shared_preferences: ^2.2.3
   url_launcher: ^6.1.5
 
 dev_dependencies:
@@ -92,9 +94,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Segoe UI
+    - family: LexendZetta-Regular
       fonts:
-        - asset: assets/font/Segoe UI.ttf
+        - asset: assets/font/LexendZetta-Regular.ttf
     - family: Segoe UI Bold
       fonts:
         - asset: assets\font\Segoe UI Bold.ttf

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paatify/controller/constant/const.dart';
 
 class CustomTextWidget extends StatelessWidget {
   final String title;
@@ -7,13 +8,10 @@ class CustomTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: const TextStyle(
-        fontWeight: FontWeight.w900,
-        fontSize: 25.0,
-        fontFamily: 'Segoe UI',
-      ),
+    return text(
+      text: title,
+      ftWeight: FontWeight.w900,
+      fontSize: 17.0,
     );
   }
 }

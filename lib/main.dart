@@ -6,9 +6,11 @@ import 'package:paatify/controller/provider/favoritepro/favbutprovider.dart';
 import 'package:paatify/controller/provider/favoritepro/favoriteprovider.dart';
 import 'package:paatify/controller/provider/homeprovider.dart';
 import 'package:paatify/controller/provider/miniplayerprovider.dart';
+import 'package:paatify/controller/provider/onboard_controller.dart';
 import 'package:paatify/controller/provider/playlistprovider/allsongslistprovider.dart';
 import 'package:paatify/controller/provider/playlistprovider/playlistlistprovider.dart';
 import 'package:paatify/controller/provider/searchprovider.dart';
+import 'package:paatify/controller/provider/splash_controller.dart';
 import 'package:paatify/model/paatify_model.dart';
 import 'package:paatify/view/splash/splashscreen.dart';
 import 'package:flutter/services.dart';
@@ -51,6 +53,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => FavoritesProvider()),
         ChangeNotifierProvider(create: (context) => FavoriteButProvider()),
         ChangeNotifierProvider(create: (context) => MiniPlayerProvider()),
+        ChangeNotifierProvider(create: (context) => OnboardController()),
+        ChangeNotifierProvider(create: (context) => SplashController()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
